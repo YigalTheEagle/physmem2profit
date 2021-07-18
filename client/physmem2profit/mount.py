@@ -354,6 +354,21 @@ def init(host, port, removeOldConfig = True):
     except ConnectionRefusedError:
         raise Exception("[-] Failed to connect, quitting")
 
+def initListen(lisAddr, port, removeOldConfig = True):
+    try:
+        if (removeOldConfig and os.path.exists("config.json")):
+            os.remove("config.json")
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print("[*] Listening and waiting for connection on port {}".format(port))
+        # Waiting For connection
+        sock.bind((str(lisAddr), port))
+        sock.listen()
+        connectionSocket, address = sock.accept()
+        print("[*] Connected")
+        return connectionSocket
+    except ConnectionRefusedError:
+        raise Exception("[-] Failed to connect, quitting")
+
 ## Mount external memory exposed by socket as file.
 #
 #  Use Fuse to create abstract file. File location and parameters are provided in config.json.
