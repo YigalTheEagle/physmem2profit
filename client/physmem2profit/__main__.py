@@ -39,6 +39,7 @@ def parseInput():
     parser.add_argument('--install', help="Provides parameters needed for driver installation eg path (use with mount)")
     parser.add_argument('--label', default=('dump'), help="Label to include in the minidump filename (use with dump)")
     parser.add_argument('--vmem', help="Path to .vmem file (support Credential Guard)")
+    parser.add_argument('--reverse', choices=['true','false'], default='false', help='Choose to do either reverse or not, where reverse connects back to you')
     args = parser.parse_args()
 
     if args.vmem:
@@ -59,11 +60,15 @@ def parseInput():
 def main():
     try:
         args = parseInput()
+        if args.reverse == 'true':
+            socket = mount.initListen(args.host, args.port)                                               # wait for connection, before creating child process.
+            jobs.append(Process(target=lambda: mount.mount(socket, args.driver, args.install)))
+            jobs.append(Process(target=lambda: physmem2minidump.dump(args.label, args.vmem)))
 
-        if args.mode == 'all' or args.mode == 'mount':
+        if args.mode == 'all' or args.mode == 'mount' and args.reverse == 'false':
             socket = mount.init(args.host, args.port)                                               # wait for connection, before creating child process.
             jobs.append(Process(target=lambda: mount.mount(socket, args.driver, args.install)))     # mount will block thread, it need to be handled by child process.
-        if args.mode == 'all' or args.mode == 'dump':
+        if args.mode == 'all' or args.mode == 'dump' and args.reverse == 'false':
             jobs.append(Process(target=lambda: physmem2minidump.dump(args.label, args.vmem)))
 
         for job in jobs:
