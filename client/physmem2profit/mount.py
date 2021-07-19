@@ -51,7 +51,9 @@ class Physmem(Operations):
         
         msg = struct.pack("<I%ds" % len(order), len(order), order)
         print("Hey Shachar")
-        print(hex(msg))
+        maki_toki = bytearray(msg)
+        sfiki_kjz = maki_toki.hex()
+        print(sfiki_kjz)
         
         self.socket.sendall(msg)
 
