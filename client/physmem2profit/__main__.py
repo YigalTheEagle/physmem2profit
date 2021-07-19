@@ -64,12 +64,12 @@ def main():
             socket = mount.initListen(args.host, args.port)                                               # wait for connection, before creating child process.
             jobs.append(Process(target=lambda: mount.mount(socket, args.driver, args.install)))
             jobs.append(Process(target=lambda: physmem2minidump.dump(args.label, args.vmem)))
-
-        if args.mode == 'all' or args.mode == 'mount' and args.reverse == 'false':
-            socket = mount.init(args.host, args.port)                                               # wait for connection, before creating child process.
-            jobs.append(Process(target=lambda: mount.mount(socket, args.driver, args.install)))     # mount will block thread, it need to be handled by child process.
-        if args.mode == 'all' or args.mode == 'dump' and args.reverse == 'false':
-            jobs.append(Process(target=lambda: physmem2minidump.dump(args.label, args.vmem)))
+        else:
+            if args.mode == 'all' or args.mode == 'mount' and args.reverse == 'false':
+                socket = mount.init(args.host, args.port)                                               # wait for connection, before creating child process.
+                jobs.append(Process(target=lambda: mount.mount(socket, args.driver, args.install)))     # mount will block thread, it need to be handled by child process.
+            if args.mode == 'all' or args.mode == 'dump' and args.reverse == 'false':
+                jobs.append(Process(target=lambda: physmem2minidump.dump(args.label, args.vmem)))
 
         for job in jobs:
             job.start()
