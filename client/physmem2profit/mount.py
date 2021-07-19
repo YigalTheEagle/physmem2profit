@@ -48,12 +48,19 @@ class Physmem(Operations):
         print("[*] Driver installed")
         # send map order.
         order = ('%s\n%s\n' % (self.driver, self.order[1])).encode('utf-8')
+        
         msg = struct.pack("<I%ds" % len(order), len(order), order)
+        print("Hey Shachar")
+        print(hex(msg))
+        
         self.socket.sendall(msg)
 
         # Receive map data from the server
+        print("Hey Bagle")
         received = self.socket.recv(32)
+        print("Hey Bagle2")
         dtb, build, kernel_base, n = struct.unpack("<QQQQ", received)
+        print("Hey Bagle3")
         #print("DTB", hex(dtb))
         #print("build", build)
         #print("kernel_base", hex(kernel_base))
