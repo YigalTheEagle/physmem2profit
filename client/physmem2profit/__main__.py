@@ -68,7 +68,9 @@ def main():
             if args.mode == 'all' or args.mode == 'mount' and args.reverse == 'false':
                 socket = mount.init(args.host, args.port)                                               # wait for connection, before creating child process.
                 jobs.append(Process(target=lambda: mount.mount(socket, args.driver, args.install)))     # mount will block thread, it need to be handled by child process.
+                print("I'm at the main, and I finished mounting lol")
             if args.mode == 'all' or args.mode == 'dump' and args.reverse == 'false':
+                print("I'm at the main, and I'm taking a dump baby")
                 jobs.append(Process(target=lambda: physmem2minidump.dump(args.label, args.vmem)))
 
         for job in jobs:

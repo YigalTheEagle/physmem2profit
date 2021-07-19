@@ -145,6 +145,9 @@ def read_modulelist(s, pid):
 # @param path path to file.
 # @exceptions Exception if file does not exist.
 def ensureFileExist(path):
+    print("I'm at physmem2minidump at ensureFileExist")
+    os.system("ls -R /tmp")
+    print("finished dumping u mama")
     for x in range(120):
         if(os.path.exists(path)):
             break
@@ -205,6 +208,7 @@ def _cg(s, vmem_filepath, label):
 
 
 def _dump(label, vmem):
+    print("I'm at physmem2minidump at dump")
     minidump = Minidump()
 
     config = {}
