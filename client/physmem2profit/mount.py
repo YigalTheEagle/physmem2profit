@@ -61,6 +61,9 @@ class Physmem(Operations):
         print("Hey Bagle")
         received = self.socket.recv(32)
         print("Hey Bagle2")
+        maki_toki1 = bytearray(received)
+        sfiki_kjz2 = maki_toki1.hex()
+        print(sfiki_kjz2)
         dtb, build, kernel_base, n = struct.unpack("<QQQQ", received)
         print("Hey Bagle3")
         #print("DTB", hex(dtb))
@@ -73,6 +76,11 @@ class Physmem(Operations):
         self.runs = []
         for x in range(n):
             received = self.socket.recv(16)
+            maki_toki12 = bytearray(received)
+            sfiki_kjz23 = maki_toki12.hex()
+            print("We're in the loop man")
+            print(sfiki_kjz23)
+            print("We're in the loop man")
             start, size = struct.unpack("<QQ", received)
             #print(hex(start), size)
             self.runs.append((start,size))
