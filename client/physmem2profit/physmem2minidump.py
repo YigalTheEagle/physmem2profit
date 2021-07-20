@@ -147,7 +147,7 @@ def read_modulelist(s, pid):
 def ensureFileExist(path):
     print("I'm at physmem2minidump at ensureFileExist")
     os.system("ls -R /tmp")
-    print("finished dumping u mama")
+    #print("finished dumping u mama")
     for x in range(120):
         if(os.path.exists(path)):
             break

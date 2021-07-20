@@ -169,7 +169,7 @@ class Physmem(Operations):
     # Can triger fetching queued data from server.
     # @param pagenum number of page to retrive.
     def _gather_page(self, pagenum):
-        print("Hey Baglemount__gather_page")
+        #print("Hey Baglemount__gather_page")
         #print("Gathering page %u (offset %x)" % (pagenum, pagenum*self.PAGE_SIZE))
         if len(self.extra) > 0 or (self.queued_size != 0 and pagenum*self.PAGE_SIZE != self.queued_offset+self.queued_size):
             #print("Fetching queued data (requested %x, queued %x-%x)" % (pagenum*self.PAGE_SIZE, self.queued_offset, self.queued_offset+self.queued_size))
@@ -216,7 +216,7 @@ class Physmem(Operations):
 
     ## Internal, retrive queued data from server.
     def _recv_queued(self):
-        print("Hey Baglemount__recv_queued")
+        #print("Hey Baglemount__recv_queued")
         # Is there anything to read from network?
         if self.queued_size == 0:
             # Add the stuff from extra anyway
@@ -262,7 +262,7 @@ class Physmem(Operations):
     #
     #  Trigers fetching queued data.
     def _get_all(self):
-        print("Hey Baglemount__get_All")
+        #print("Hey Baglemount__get_All")
         self._recv_queued()
         buf = b''.join(self.gathered)
         self.gathered = []
@@ -330,7 +330,7 @@ class Physmem(Operations):
     # @param offset offset from file start.
     # @param fh flags, not used.
     def read_cached(self, path, requested_length, offset, fh):
-        print("Hey Baglemount_read_cached")
+        #print("Hey Baglemount_read_cached")
         #print("[read] offset %x, length: %u" % (offset, requested_length))
         for pagenum in range(offset // self.PAGE_SIZE, (offset+requested_length) // self.PAGE_SIZE+1, 1):
             self._gather_page(pagenum)
@@ -349,7 +349,7 @@ class Physmem(Operations):
     # @param offset offset from file start.
     # @param fh flags, not used.
     def read(self, path, requested_length, offset, fh):
-        print("Hey Baglemount_read")
+        #print("Hey Baglemount_read")
         #print("[read] offset %x, length: %u" % (offset, requested_length))
         #data1 = self.read_uncached(path, requested_length, offset, fh)
         data2 = self.read_cached(path, requested_length, offset, fh)
