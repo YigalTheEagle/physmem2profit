@@ -134,6 +134,7 @@ class Physmem(Operations):
     # @exceptions FuseOSError if path was other than one supported file, or file dir.
     def getattr(self, path, fh=None):
         print("Hey Baglemount_getattr")
+        print(path)
         if path == "/":
             dir =  { 'st_mode' : stat.S_IFDIR | 0o555, 'st_nlink' : 2 }
             return dir
